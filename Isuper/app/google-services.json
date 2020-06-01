@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "335523006866",
+    "firebase_url": "https://isuper-a2018.firebaseio.com",
+    "project_id": "isuper-a2018",
+    "storage_bucket": "isuper-a2018.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:335523006866:android:a5563a82dd47a5ecccd94b",
+        "android_client_info": {
+          "package_name": "isuper.com.br"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "335523006866-qncbkf0mvog13joqqq7ffnippdhae7ti.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "isuper.com.br",
+            "certificate_hash": "81010ce376f6a533fa63407e6036dfc4fc6120ee"
+          }
+        },
+        {
+          "client_id": "335523006866-gehc2jfpj7h3pr28khrrk24r84cbcht5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCQSuyaPVR7YSZMQeTmCbnD_5zqcEIojlA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "335523006866-gehc2jfpj7h3pr28khrrk24r84cbcht5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
