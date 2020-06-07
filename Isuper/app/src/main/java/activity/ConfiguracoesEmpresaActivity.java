@@ -16,8 +16,13 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 
@@ -36,6 +41,7 @@ public class ConfiguracoesEmpresaActivity extends AppCompatActivity {
     private StorageReference storageReference;
     private String idUsuarioLogado;
     private String urlImagemSelecionada = "";
+    private DatabaseReference firebaseRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +51,7 @@ public class ConfiguracoesEmpresaActivity extends AppCompatActivity {
         //Configurações iniciais
         inicializarComponentes();
         storageReference = ConfiguracaoFirebase.getFirebaseStorage();
+        firebaseRef = ConfiguracaoFirebase.getFirebase();
         idUsuarioLogado = UsuarioFirebase.getIdUsuario();
 
         //Configurações Toolbar
@@ -66,9 +73,37 @@ public class ConfiguracoesEmpresaActivity extends AppCompatActivity {
             }
         });
 
-
+/*Recuperar dados da empresa*/
+        recuperarDadosEmpresa();
     }
+    private void recuperarDadosEmpresa(){
+        DatabaseReference empresaRef = firebaseRef
+                .child("empresas")
+                .child(idUsuarioLogado);
+        empresaRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.getValue() != null){
+                    Empresa empresa = dataSnapshot.getValue(Empresa.class);
+                    editEmpresaNome.setText(empresa.getNome());
+                    editEmpresaCategoria.setText(empresa.getCategoria());
+                    editEmpresaTaxa.setText(empresa.getPrecoEntrega().toString());
+                    editEmpresaTempo.setText(empresa.getTempo());
+                    urlImagemSelecionada = empresa.getUrlImagem();
+                    if(urlImagemSelecionada!=""){
+                        Picasso.get()
+                                .load(urlImagemSelecionada)
+                                .into(imagePerfilEmpresa);
+                    }
+                }
+            }
 
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
     public void validarDadosEmpresa(View view){
 
         //Valida se os campos foram preenchidos
@@ -177,9 +212,9 @@ public class ConfiguracoesEmpresaActivity extends AppCompatActivity {
     }
 
     private void inicializarComponentes(){
-        editEmpresaNome = findViewById(R.id.editEmpresaNome);
-        editEmpresaCategoria = findViewById(R.id.editEmpresaCategoria);
-        editEmpresaTaxa = findViewById(R.id.editEmpresaTaxa);
+        editEmpresaNome = findViewById(R.id.editUsuarioNome);
+        editEmpresaCategoria = findViewById(R.id.editUsuarioEndereco);
+        editEmpresaTaxa = findViewById(R.id.editProdutoPreco);
         editEmpresaTempo = findViewById(R.id.editEmpresaTempo);
         imagePerfilEmpresa = findViewById(R.id.imagePerfilEmpresa);
     }
